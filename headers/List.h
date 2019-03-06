@@ -7,7 +7,8 @@
 template <class Type>
 class List/*<Type>*/ {
     private:
-    
+    Node<Type> head;
+    Node<Type> tail;
     public:
         List();
         List(Type data);
