@@ -5,14 +5,14 @@
 #include "Iterator.h"
 
 template <class Type>
-class List/*<Type>*/ {
+class List {
     private:
-    Node<Type> head;
-    Node<Type> tail;
+    Node<Type>* head;
+    Node<Type>* tail;
     public:
         List();
         List(Type data);
-        List(const List<Type>&);
+        List(const List<Type>& list);
         ~List();
 
         List<Type>&  operator =(const List<Type>& other);
