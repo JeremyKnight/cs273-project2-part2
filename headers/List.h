@@ -9,13 +9,14 @@ class List {
     private:
     Node<Type>* head;
     Node<Type>* tail;
+    void swap(List<Type>& other);
     public:
         List();
         List(Type data);
         List(const List<Type>& list);
         ~List();
 
-        List<Type>&  operator =(const List<Type>& other);
+        List<Type>& operator =(const List<Type>& other);
 
         int size();
 
@@ -23,8 +24,6 @@ class List {
         void pop_back();
         void push_front(Type element);
         void pop_front();
-
-        //void swap(list<Type>& other);
 
         iterator<Type> begin();
         iterator<Type> end();
