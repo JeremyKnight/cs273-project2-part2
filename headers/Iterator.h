@@ -14,7 +14,7 @@ class iterator {
     friend class List<Type>;
     private:
         List<Type>* parent;
-        List<Type>* current;
+        Node<Type>* current;
         typename List<Type>::Node* pos;
         iterator(List<Type>* prnt, Node<Type>* pos): parent(prnt), current(pos) {}
 };

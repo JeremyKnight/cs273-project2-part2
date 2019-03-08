@@ -7,9 +7,11 @@
 template <class Type>
 class List {
     private:
-    Node<Type>* head;
-    Node<Type>* tail;
-    void swap(List<Type>& other);
+        Node<Type>* head;
+        Node<Type>* tail;
+        void swap(List<Type>& other);
+        int len=0;
+
     public:
         List();
         List(Type data);
