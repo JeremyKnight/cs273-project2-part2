@@ -15,8 +15,10 @@ class iterator {
     private:
         List<Type>* parent;
         Node<Type>* current;
-        typename List<Type>::Node* pos;
+        //typename List<Type>::Node* pos;
         iterator(List<Type>* prnt, Node<Type>* pos): parent(prnt), current(pos) {}
+    public:
+
 };
 
 #endif
