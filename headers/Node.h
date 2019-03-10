@@ -9,7 +9,7 @@ struct Node {
     Node<Type>* next;
     Node<Type>* prev;
 
-    Node(const Type& item, Node* next = NULL, Node* prev = NULL) : data(item), next(next), data(item), prev(prev){}
+    Node(const Type& item, Node* next = NULL, Node* prev = NULL) : data(item), next(next), prev(prev){}
     //Node<Type>& operator =(const Node<Type>& other);
 };
 

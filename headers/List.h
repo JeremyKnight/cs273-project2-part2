@@ -4,6 +4,12 @@
 #include "Node.h"
 #include "Iterator.h"
 #include <assert.h>
+#include <iostream>
+#include <stdexcept>
+
+using std::string;
+using std::cout;
+
 template <class Type>
 class List {
     private:
@@ -30,26 +36,23 @@ class List {
         
         List(const List<Type>& list) {
 
-            List<Type> temp = List();
+           
+            head = NULL;
+            tail = NULL;
+            Node<Type>* temp = list.head;
+            while(temp!=NULL) {
+                push_back(temp->data);
+                temp = temp->next;
+           }
 
-            while(list.size() != 0) {
-                temp.push_back(list.head.data);
-                list.pop_front();
-            }
-            this->head = temp->head;
-            this->tail = temp->tail;
         }
-
-
-        
+      
         ~List() {
             while(this->size()!=0) {
                 this->pop_front();
             }
-            assert(this->head==NULL && this->tail==NULL);
         }
-
-        
+   
         void push_back(Type element) {
             if (head == NULL) {
                 head = new Node<Type>(element);
@@ -66,7 +69,10 @@ class List {
 
         
         void pop_back() {
+            if(tail == NULL) 
+                throw std::invalid_argument("tail is NULL");
             Node<Type> * temp = tail->prev;
+            temp->next = NULL;
             delete tail;
             tail = temp;
             len--;
@@ -88,6 +94,8 @@ class List {
 
         
         void pop_front() {
+            if(head == NULL) 
+                throw std::invalid_argument("head is NULL");
             Node<Type> * temp = head->next;
             delete head;
             head = temp;
@@ -99,6 +107,7 @@ class List {
             
             this->head = other->head;
             this->tail = other->tail;
+            this->len = other->len;
         }
 
         
@@ -121,7 +130,7 @@ class List {
 
         
         iterator<Type> end() {
-            iterator<Type> i(this, this->tail);
+            iterator<Type> i(this, this->tail->next);
             return i;
         }
 
@@ -155,8 +164,11 @@ class List {
         
         iterator<Type> erase(iterator<Type> position) {
             if(position.current == this->head) {
+                cout << "from postion current is head" << std::endl;
                 this->pop_front();
             } else if(position.current == this->tail) {
+                cout << "from postion current is tail" << std::endl;
+
                 this->pop_back();
             } else {
                 /*
@@ -165,13 +177,13 @@ class List {
                 position.current->prev = newNode;
                 position.current->prev->next = newNode;
                 */
-
+                //cout << "position: " << position.current->data << " tail: " << this->tail->data;
                 position.current->prev->next = position.current->next;
                 position.current->next->prev = position.current->prev;
-
+                //cout << "from btween tail, and head" << std::endl;
                 delete position.current;
 
-                size--;
+                len--;
                 iterator<Type> newIt = iterator<Type>(this, position.current->next);
                 return newIt;
                 
