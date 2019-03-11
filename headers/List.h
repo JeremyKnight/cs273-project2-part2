@@ -21,9 +21,7 @@ class List {
         /**
          * constuctor for list
          * creates an empty list with head and tail pointers as null
-         **/
-
-        
+         **/  
         List() {
             head = NULL;
             tail = NULL;
@@ -35,8 +33,6 @@ class List {
          **/
         
         List(const List<Type>& list) {
-
-           
             head = NULL;
             tail = NULL;
             Node<Type>* temp = list.head;
@@ -46,28 +42,32 @@ class List {
            }
 
         }
-      
+
+        // Deconstruct the list
         ~List() {
             while(this->size()!=0) {
                 this->pop_front();
             }
+            head = NULL;
+            tail = NULL;
         }
-   
+
+        // Add an element to the end of the list
+        // input: element -- the element to add to the list 
         void push_back(Type element) {
             if (head == NULL) {
                 head = new Node<Type>(element);
                 tail = head;
                 
             } else {
-                // Node * localTail = tail;
                 Node<Type> * newTail = new Node<Type>(element, NULL, tail);
                 tail->next = newTail;
                 tail = newTail;
             }
             len++;
         }
-
         
+        // Remove the last element in the list
         void pop_back() {
             if(tail == NULL) 
                 throw std::invalid_argument("tail is NULL");
@@ -78,7 +78,8 @@ class List {
             len--;
         }
 
-        
+        // Add an element to the beginning of the list
+        // input: element -- the element to add to the list 
         void push_front(Type element) { 
             if (tail == NULL) {
                 head = new Node<Type>(element);
@@ -92,7 +93,7 @@ class List {
             len++;
         }
 
-        
+        // Renove the first element in the list.
         void pop_front() {
             if(head == NULL) 
                 throw std::invalid_argument("head is NULL");
@@ -102,44 +103,47 @@ class List {
             len--;
         }
 
-        
+        // Shallow copy other into this list.
+        // input: other -- the list from which to copy the data into this list
         void swap(List<Type>& other) {
-            
             this->head = other->head;
             this->tail = other->tail;
             this->len = other->len;
         }
 
-        
+        // The size of the list
         int size() {
             return len;
         }
 
-        
+        // Assign other to this
+        // input: other -- the list to set this list to
         List<Type>& operator= (const List<Type>& other) {
             List<Type> temp(other);
             swap(temp);
             return *this;
         }
 
-        
+        // Returns an iterator representing the beginning of the list.
         iterator<Type> begin() {
             iterator<Type> i(this, this->head);
             return i;
         }
 
-        
+        // Returns an iterator representing the end of the list.
         iterator<Type> end() {
             iterator<Type> i(this, this->tail->next);
             return i;
         }
 
-        
+        // Insert an element before position
+        // input:
+        // position -- an iterator representing the position to insert the new value.
+        // value -- the data to insert into the list.
+        // returns the iterator of the inserted data.
         iterator<Type> insert(iterator<Type> position, const Type& value) {
-
             if( position.current == this->head) { //beginning 
                 this->push_front(value);
-                //retrun new iterator at head
                 iterator<Type> newIt = iterator<Type>(this, this->head);
                 return newIt;
                 
@@ -147,7 +151,7 @@ class List {
                 this->push_back(value);
                 iterator<Type> newIt = iterator<Type>(this, this->tail);
                 return newIt;
-            } else { 
+            } else { //middle
                 Node<Type>* newNode = new Node<Type>(value,position.current->prev, position.current);
                 
                 position.current->prev = newNode;
@@ -159,30 +163,18 @@ class List {
             }
             
         }
-
-        //returns iterator after the one erased
-        
+        // erase the element position represents.
+        // input: position the iterator representing the data to remove.
+        // returns the iterator after the one erased.
         iterator<Type> erase(iterator<Type> position) {
-            if(position.current == this->head) {
-                cout << "from postion current is head" << std::endl;
+            if(position.current == this->head) { // beginning
                 this->pop_front();
-            } else if(position.current == this->tail) {
-                cout << "from postion current is tail" << std::endl;
-
+            } else if(position.current == this->tail) { // end
                 this->pop_back();
-            } else {
-                /*
-                Node<Type>* newNode = new Node<Type>(value,position.current->prev, position.current);
-                
-                position.current->prev = newNode;
-                position.current->prev->next = newNode;
-                */
-                //cout << "position: " << position.current->data << " tail: " << this->tail->data;
+            } else { // middle
                 position.current->prev->next = position.current->next;
                 position.current->next->prev = position.current->prev;
-                //cout << "from btween tail, and head" << std::endl;
                 delete position.current;
-
                 len--;
                 iterator<Type> newIt = iterator<Type>(this, position.current->next);
                 return newIt;
@@ -192,4 +184,3 @@ class List {
 };
 
 #endif
-

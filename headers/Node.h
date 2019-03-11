@@ -9,8 +9,9 @@ struct Node {
     Node<Type>* next;
     Node<Type>* prev;
 
+    //constructs node
+    //input: item: data. next and prev pointers
     Node(const Type& item, Node* next = NULL, Node* prev = NULL) : data(item), next(next), prev(prev){}
-    //Node<Type>& operator =(const Node<Type>& other);
 };
 
 #endif

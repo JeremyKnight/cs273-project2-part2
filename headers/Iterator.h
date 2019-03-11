@@ -16,9 +16,9 @@ class iterator {
     private:
         List<Type>* parent;
         Node<Type>* current;
-        //typename List<Type>::Node* pos;
         iterator(List<Type>* prnt, Node<Type>* pos): parent(prnt), current(pos) {}
     public:
+        //returns the underlying data
         //taken from book
         Type& operator*() const {
             if(current == NULL) {
@@ -26,7 +26,10 @@ class iterator {
             }
             return current->data;
         }
-
+        
+        //moves to the next element in list
+        //input: int for postfix (synatx magic)
+        //output: pointer of next in list
         //taken from book
         iterator& operator++(int) {
             if(current == NULL) {
@@ -36,10 +39,16 @@ class iterator {
             return *this;
         }
 
+        //checks that this iterator is equal to i
+        //intput: iterator to compare
+        //output: true if equal, false if not
         bool operator==(iterator i) {
             return current == i.current && parent == i.parent; 
         }
-
+        
+        //checks that this iterator is not equal to i
+        //intput: iterator to compare
+        //output: false if equal, true if not
         bool operator!=(iterator i) {
             return (*this == i) == false; 
         }
